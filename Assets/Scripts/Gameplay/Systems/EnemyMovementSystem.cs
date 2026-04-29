@@ -8,22 +8,12 @@ namespace Game.Gameplay.Systems
     {
         public float Speed { get => speed; private set => speed = value; }
         [SerializeField] private float speed;
-        
-        [SerializeField] private Rigidbody rigidBody;
 
         private float currentSpeed;
 
-        private void Awake()
-        {
-            rigidBody = GetComponent<Rigidbody>();
-        }
-
         public void Move(Vector3 direction)
         {
-            rigidBody.MovePosition(transform.position + (currentSpeed * Time.deltaTime * direction));
-
-            //use while testing
-            //transform.position += direction * speed * Time.deltaTime;
+            transform.position += currentSpeed * Time.deltaTime * direction;
         }
         
         public void StartMoving()

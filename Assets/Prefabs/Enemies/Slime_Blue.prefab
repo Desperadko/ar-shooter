@@ -549,7 +549,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80493d07665a82b4895012c1560d69b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Game.Gameplay.Systems.Mover
-  speed: 10
+  speed: 0.5
   rigidBody: {fileID: 756881209626335055}
 --- !u!114 &3574689468600111186
 MonoBehaviour:

@@ -4766,7 +4766,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f0cdf95888c4b942894f0277aa016fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DifficultyManager
-  enemySpeedIncreasage: 0.5
+  enemySpeedIncreasage: 0.2
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
