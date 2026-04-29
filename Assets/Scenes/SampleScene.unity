@@ -3283,8 +3283,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 173fdbbd795214c42b7332b83e4db821, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Game.Gameplay.Controllers.PlayerController
-  shootCooldown: 1
-  shootRange: 2
+  shootCooldown: 0.5
+  shootRange: 0.5
   projectile: {fileID: 1915447298578453072, guid: d4f45e73bb72ad64bac0c494f4634132, type: 3}
 --- !u!1 &1275870076
 GameObject:
