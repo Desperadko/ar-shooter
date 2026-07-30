@@ -11,15 +11,22 @@ namespace Game.UI
 
         private const string SCORE_TEXT = "Score: ";
 
-        private void Awake()
+        private void OnEnable()
         {
-            score = 0;
-
-            scoreText.text = SCORE_TEXT + score.ToString();
+            GameManager.OnGameStarted += ResetScore;
+            EnemyHealthSystem.OnDeath += AddScore;
+        }
+        private void OnDisable()
+        {
+            GameManager.OnGameStarted -= ResetScore;
+            EnemyHealthSystem.OnDeath -= AddScore;
         }
 
-        private void OnEnable() => EnemyHealthSystem.OnDeath += AddScore;
-        private void OnDisable() => EnemyHealthSystem.OnDeath -= AddScore;
+        private void ResetScore()
+        {
+            score = 0;
+            scoreText.text = SCORE_TEXT + score.ToString();
+        }
 
         private void AddScore()
         {

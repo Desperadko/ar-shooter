@@ -9,16 +9,23 @@ public class DifficultyManager : MonoBehaviour
 
     private void OnEnable()
     {
+        GameManager.OnGameStarted += ResetSpeed;
         GameManager.OnMinutePassed += IncreaseSpeed;
     }
 
     private void OnDisable()
     {
+        GameManager.OnGameStarted -= ResetSpeed;
         GameManager.OnMinutePassed -= IncreaseSpeed;
     }
 
     private void IncreaseSpeed()
     {
         EnemySpeedIncreasage += enemySpeedIncreasage;
+    }
+
+    private void ResetSpeed()
+    {
+        EnemySpeedIncreasage = 0f;
     }
 }
