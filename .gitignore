@@ -76,6 +76,8 @@ mono_crash.*
 *.unitypackage
 *.unitypackage.meta
 *.app
+/Build APK
+/Builds
 
 # Crashlytics generated file
 crashlytics-build.properties
@@ -104,3 +106,13 @@ InitTestScene*.unity*
 
 # Auto-generated cache in Assets folder
 /[Aa]ssets/[Ss]ceneDependencyCache*
+
+# Unity crash-recovery scenes
+/Assets/_Recovery/
+
+# XR Simulation editor-local preferences
+/Assets/XR/UserSimulationSettings/
+
+# Unity Performance Test Runner output
+/Assets/Resources/PerformanceTestRun*.json
+/Assets/Resources/PerformanceTestRun*.json.meta

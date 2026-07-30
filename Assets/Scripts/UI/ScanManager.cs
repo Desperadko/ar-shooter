@@ -2,7 +2,6 @@ using TMPro;
 using Unity.Collections;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.XR.ARCore;
 using UnityEngine.XR.ARFoundation;
 
 namespace Game.UI
