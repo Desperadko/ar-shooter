@@ -28,6 +28,11 @@ namespace Game.Gameplay.Systems
             if (currentHealth <= 0) return;
 
             currentHealth = Mathf.Max(currentHealth - damage, 0);
+
+#if UNITY_ANDROID || UNITY_IOS
+            Handheld.Vibrate();
+#endif
+
             OnPlayerDamaged?.Invoke(currentHealth);
 
             if (currentHealth <= 0)
