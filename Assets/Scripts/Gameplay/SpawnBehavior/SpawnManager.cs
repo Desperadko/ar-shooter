@@ -17,6 +17,7 @@ namespace Game.Gameplay.SpawnBehavior
 
         private void Awake()
         {
+            GameManager.OnInitialized += StopSpawning;
             GameManager.OnGameStarted += StartSpawning;
             GameManager.OnGameResumed += StartSpawning;
             GameManager.OnGamePaused += StopSpawning;
@@ -26,6 +27,7 @@ namespace Game.Gameplay.SpawnBehavior
 
         private void OnDestroy()
         {
+            GameManager.OnInitialized -= StopSpawning;
             GameManager.OnGameStarted -= StartSpawning;
             GameManager.OnGameResumed -= StartSpawning;
             GameManager.OnGamePaused -= StopSpawning;

@@ -6,6 +6,7 @@ namespace Game.UI
 {
     public class GameManager : MonoBehaviour
     {
+        public static event Action OnInitialized;
         public static event Action OnGameStarted;
         public static event Action OnGamePaused;
         public static event Action OnGameResumed;
@@ -13,11 +14,13 @@ namespace Game.UI
         public static event Action OnScan;
         public static event Action OnMinutePassed;
 
-        [SerializeField] private GameObject startUI;
+        [SerializeField] private GameObject mainMenuUI;
+        [SerializeField] private GameObject scanUI;
         [SerializeField] private GameObject gameUI;
         [SerializeField] private GameObject pauseUI;
         [SerializeField] private GameObject defeatUI;
-    
+
+        [SerializeField] private Button playButton;
         [SerializeField] private Button startButton;
         [SerializeField] private Button pauseButton;
         [SerializeField] private Button resumeButton;
@@ -35,6 +38,7 @@ namespace Game.UI
         {
             instance = this;
 
+            playButton.onClick.AddListener(PlayGame);
             startButton.onClick.AddListener(StartGame);
             pauseButton.onClick.AddListener(PauseGame);
             resumeButton.onClick.AddListener(ResumeGame);
@@ -44,14 +48,15 @@ namespace Game.UI
 
         private void Start()
         {
-            startUI.SetActive(true);
+            mainMenuUI.SetActive(true);
+            scanUI.SetActive(false);
             gameUI.SetActive(false);
             pauseUI.SetActive(false);
             defeatUI.SetActive(false);
 
             isPlaying = false;
 
-            OnScan?.Invoke();
+            OnInitialized?.Invoke();
         }
 
         private void Update()
@@ -67,11 +72,19 @@ namespace Game.UI
             }
         }
 
+        private void PlayGame()
+        {
+            scanUI.SetActive(true);
+            mainMenuUI.SetActive(false);
+
+            OnScan?.Invoke();
+        }
+
         private void StartGame()
         {
             gameUI.SetActive(true);
             defeatUI.SetActive(false);
-            startUI.SetActive(false);
+            scanUI.SetActive(false);
 
             isPlaying = true;
             elapsedTime = 0f;
@@ -102,7 +115,7 @@ namespace Game.UI
 
         private void Scan()
         {
-            startUI.SetActive(true);
+            scanUI.SetActive(true);
             defeatUI.SetActive(false);
 
             isPlaying = false;

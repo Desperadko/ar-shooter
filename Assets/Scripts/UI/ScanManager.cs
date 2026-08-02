@@ -19,6 +19,11 @@ namespace Game.UI
         private float totalArea = 0f;
         private TextMeshProUGUI startButtonTextMesh;
 
+        private void Awake()
+        {
+            GameManager.OnInitialized += DisableManager;
+        }
+
         void OnEnable()
         {
             GameManager.OnScan += EnableManager;
@@ -37,6 +42,11 @@ namespace Game.UI
             GameManager.OnGameStarted -= DisableManager;
 
             planeManager.trackablesChanged.RemoveListener(OnPlanesChanged);
+        }
+
+        private void OnDestroy()
+        {
+            GameManager.OnInitialized -= DisableManager;
         }
 
         private void EnableManager()

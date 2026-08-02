@@ -20,6 +20,7 @@ namespace Game.Gameplay.Controllers
         {
             lastShot = -shootCooldown;
 
+            GameManager.OnInitialized += StopController;
             GameManager.OnGameStarted += StartController;
             GameManager.OnGamePaused += StopController;
             GameManager.OnGameResumed += StartController;
@@ -29,6 +30,7 @@ namespace Game.Gameplay.Controllers
 
         private void OnDestroy()
         {
+            GameManager.OnInitialized -= StopController;
             GameManager.OnGameStarted -= StartController;
             GameManager.OnGamePaused -= StopController;
             GameManager.OnGameResumed -= StartController;
