@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,6 +8,7 @@ namespace Game.UI
     public class GameManager : MonoBehaviour
     {
         public static event Action OnInitialized;
+        public static event Action OnMainMenuOpened;
         public static event Action OnGameStarted;
         public static event Action OnGamePaused;
         public static event Action OnGameResumed;
@@ -15,10 +17,16 @@ namespace Game.UI
         public static event Action OnMinutePassed;
 
         [SerializeField] private GameObject mainMenuUI;
+        [SerializeField] private GameObject mainMenuPersistentButtonUI;
+        [SerializeField] private GameObject mainMenuRedirectionConfirmationUI;
         [SerializeField] private GameObject scanUI;
         [SerializeField] private GameObject gameUI;
         [SerializeField] private GameObject pauseUI;
         [SerializeField] private GameObject defeatUI;
+
+        [SerializeField] private List<Button> mainMenuButtons;
+        [SerializeField] private Button ConfirmationButtonYes;
+        [SerializeField] private Button ConfirmationButtonNo;
 
         [SerializeField] private Button playButton;
         [SerializeField] private Button startButton;
@@ -33,6 +41,9 @@ namespace Game.UI
         private float elapsedTime;
         private float nextMinuteMark;
         private const int MINUTE = 60;
+        
+        private GameObject prevUI;
+        private bool prevIsPlaying;
 
         private void Awake()
         {
@@ -44,15 +55,41 @@ namespace Game.UI
             resumeButton.onClick.AddListener(ResumeGame);
             startAgainButton.onClick.AddListener(StartGame);
             rescanButton.onClick.AddListener(Scan);
+
+            foreach (var button in mainMenuButtons)
+            {
+                button.onClick.AddListener(RedirectToMainMenuConfirmation);
+            }
+            ConfirmationButtonYes.onClick.AddListener(PositiveConfirmation);
+            ConfirmationButtonNo.onClick.AddListener(NegativeConfirmation);
+        }
+
+        private void OnDestroy()
+        {
+            playButton.onClick.RemoveListener(PlayGame);
+            startButton.onClick.RemoveListener(StartGame);
+            pauseButton.onClick.RemoveListener(PauseGame);
+            resumeButton.onClick.RemoveListener(ResumeGame);
+            startAgainButton.onClick.RemoveListener(StartGame);
+            rescanButton.onClick.RemoveListener(Scan);
+
+            foreach (var button in mainMenuButtons)
+            {
+                button.onClick.RemoveListener(RedirectToMainMenuConfirmation);
+            }
+            ConfirmationButtonYes.onClick.RemoveListener(PositiveConfirmation);
+            ConfirmationButtonNo.onClick.RemoveListener(NegativeConfirmation);
         }
 
         private void Start()
         {
             mainMenuUI.SetActive(true);
+            mainMenuRedirectionConfirmationUI.SetActive(false);
             scanUI.SetActive(false);
             gameUI.SetActive(false);
             pauseUI.SetActive(false);
             defeatUI.SetActive(false);
+            HandlePersistentUI();
 
             isPlaying = false;
 
@@ -76,6 +113,13 @@ namespace Game.UI
         {
             scanUI.SetActive(true);
             mainMenuUI.SetActive(false);
+            HandlePersistentUI();
+            mainMenuPersistentButtonUI.SetActive(true);
+
+            isPlaying = false;
+
+            prevUI = scanUI;
+            prevIsPlaying = isPlaying;
 
             OnScan?.Invoke();
         }
@@ -83,12 +127,16 @@ namespace Game.UI
         private void StartGame()
         {
             gameUI.SetActive(true);
-            defeatUI.SetActive(false);
-            scanUI.SetActive(false);
+            prevUI.SetActive(false);
+            HandlePersistentUI();
+            mainMenuPersistentButtonUI.SetActive(false);
 
             isPlaying = true;
             elapsedTime = 0f;
             nextMinuteMark = MINUTE;
+
+            prevUI = gameUI;
+            prevIsPlaying = isPlaying;
 
             OnGameStarted?.Invoke();
         }
@@ -97,8 +145,13 @@ namespace Game.UI
         {
             pauseUI.SetActive(true);
             gameUI.SetActive(false);
+            HandlePersistentUI();
+            mainMenuPersistentButtonUI.SetActive(false);
 
             isPlaying = false;
+
+            prevUI = pauseUI;
+            prevIsPlaying = isPlaying;
 
             OnGamePaused?.Invoke();
         }
@@ -107,8 +160,13 @@ namespace Game.UI
         {
             gameUI.SetActive(true);
             pauseUI.SetActive(false);
+            HandlePersistentUI();
+            mainMenuPersistentButtonUI.SetActive(false);
 
             isPlaying = true;
+
+            prevUI = gameUI;
+            prevIsPlaying = isPlaying;
 
             OnGameResumed?.Invoke();
         }
@@ -117,10 +175,54 @@ namespace Game.UI
         {
             scanUI.SetActive(true);
             defeatUI.SetActive(false);
+            HandlePersistentUI();
+            mainMenuPersistentButtonUI.SetActive(true);
 
             isPlaying = false;
 
+            prevUI = scanUI;
+            prevIsPlaying = isPlaying;
+
             OnScan?.Invoke();
+        }
+
+        private void RedirectToMainMenuConfirmation()
+        {
+            mainMenuRedirectionConfirmationUI.SetActive(true);
+            prevUI.SetActive(false);
+            HandlePersistentUI();
+            mainMenuPersistentButtonUI.SetActive(false);
+
+            isPlaying = false;
+        }
+
+        private void PositiveConfirmation()
+        {
+            mainMenuUI.SetActive(true);
+            mainMenuRedirectionConfirmationUI.SetActive(false);
+            HandlePersistentUI();
+            mainMenuPersistentButtonUI.SetActive(false);
+
+            isPlaying = false;
+
+            prevUI = mainMenuUI;
+            prevIsPlaying = isPlaying;
+
+            OnMainMenuOpened?.Invoke();
+        }
+
+        private void NegativeConfirmation()
+        {
+            prevUI.SetActive(true);
+            HandlePersistentUI();
+            mainMenuRedirectionConfirmationUI.SetActive(false);
+
+            isPlaying = prevIsPlaying;
+
+            if(isPlaying)
+            {
+                OnGameResumed?.Invoke();
+            }
         }
 
         public static void TriggerGameOver() => instance.GameOver();
@@ -129,10 +231,19 @@ namespace Game.UI
         {
             defeatUI.SetActive(true);
             gameUI.SetActive(false);
+            HandlePersistentUI();
+            mainMenuPersistentButtonUI.SetActive(false);
 
             isPlaying = false;
 
+            prevUI = defeatUI;
+
             OnGameOver?.Invoke();
+        }
+
+        private void HandlePersistentUI()
+        {
+
         }
     }
 }
