@@ -27,7 +27,9 @@ namespace Game.UI
         void OnEnable()
         {
             GameManager.OnScan += EnableManager;
-            GameManager.OnGameStarted += DisableManager;
+            GameManager.OnGameStarted += StopAndLockLargestPlane;
+            GameManager.OnMainMenuOpened += DisableManager;
+            GameManager.OnMainMenuOpened += ClearPlanes;
 
             planeManager.trackablesChanged.AddListener(OnPlanesChanged);
 
@@ -39,7 +41,9 @@ namespace Game.UI
         void OnDisable()
         {
             GameManager.OnScan -= EnableManager;
-            GameManager.OnGameStarted -= DisableManager;
+            GameManager.OnGameStarted -= StopAndLockLargestPlane;
+            GameManager.OnMainMenuOpened -= DisableManager;
+            GameManager.OnMainMenuOpened -= ClearPlanes;
 
             planeManager.trackablesChanged.RemoveListener(OnPlanesChanged);
         }
@@ -51,27 +55,30 @@ namespace Game.UI
 
         private void EnableManager()
         {
+            ClearPlanes();
+
             totalArea = 0f;
             terrainAmountScannedText.text = $"Amount scanned: 0.0m² | Minimum: {minimumArea}m²";
             startButtonTextMesh.text = "Scanning..";
             startButton.interactable = false;
 
-            MainPlane = null;
-            arSession.Reset();
             planeManager.enabled = true;
         }
 
         private void DisableManager()
         {
             planeManager.enabled = false;
+        }
 
-            if (MainPlane != null) return;
-
+        private void LockLargestPlane()
+        {
             ARPlane largest = null;
             float largestArea = 0f;
 
             foreach (var plane in planeManager.trackables)
             {
+                if(!plane) continue; 
+
                 float area = CalculatePolygonArea(plane.boundary);
 
                 if (area > largestArea)
@@ -83,6 +90,8 @@ namespace Game.UI
 
             foreach (var plane in planeManager.trackables)
             {
+                if(!plane) continue;
+
                 if (plane == largest)
                 {
                     if (!plane.TryGetComponent<MeshCollider>(out _))
@@ -95,6 +104,26 @@ namespace Game.UI
             }
 
             MainPlane = largest;
+        }
+
+        private void StopAndLockLargestPlane()
+        {
+            DisableManager();
+            LockLargestPlane();
+        }
+
+        private void ClearPlanes()
+        {
+            MainPlane = null;
+
+            foreach (var plane in planeManager.trackables)
+            {
+                if (!plane) continue;
+
+                Destroy(plane.gameObject);
+            }
+
+            arSession.Reset();
         }
 
         private void OnPlanesChanged(ARTrackablesChangedEventArgs<ARPlane> args)

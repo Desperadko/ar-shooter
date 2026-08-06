@@ -23,6 +23,7 @@ namespace Game.Gameplay.SpawnBehavior
             GameManager.OnGamePaused += StopSpawning;
             GameManager.OnGameOver += StopSpawning;
             GameManager.OnScan += StopSpawning;
+            GameManager.OnMainMenuOpened += StopSpawning;
         }
 
         private void OnDestroy()
@@ -33,6 +34,7 @@ namespace Game.Gameplay.SpawnBehavior
             GameManager.OnGamePaused -= StopSpawning;
             GameManager.OnGameOver -= StopSpawning;
             GameManager.OnScan -= StopSpawning;
+            GameManager.OnMainMenuOpened -= StopSpawning;
         }
 
         private void StartSpawning() => enabled = true;

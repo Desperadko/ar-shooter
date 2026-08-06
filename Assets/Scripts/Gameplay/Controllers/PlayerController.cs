@@ -13,6 +13,7 @@ namespace Game.Gameplay.Controllers
         [SerializeField] private float shootCooldown;
         [SerializeField] private float shootRange;
         [SerializeField] private PoolEntry projectile;
+        [SerializeField] private PlayerColliderSystem playerColliderSystem;
 
         private float lastShot;
 
@@ -26,6 +27,7 @@ namespace Game.Gameplay.Controllers
             GameManager.OnGameResumed += StartController;
             GameManager.OnGameOver += StopController;
             GameManager.OnScan += StopController;
+            GameManager.OnMainMenuOpened += StopController;
         }
 
         private void OnDestroy()
@@ -36,10 +38,19 @@ namespace Game.Gameplay.Controllers
             GameManager.OnGameResumed -= StartController;
             GameManager.OnGameOver -= StopController;
             GameManager.OnScan -= StopController;
+            GameManager.OnMainMenuOpened -= StopController;
         }
 
-        private void StartController() => enabled = true;
-        private void StopController() => enabled = false;
+        private void StartController()
+        { 
+            playerColliderSystem?.EnableCollider();
+            enabled = true;
+        }
+        private void StopController() 
+        { 
+            playerColliderSystem?.DisableCollider();
+            enabled = false; 
+        }
 
         private void Update()
         {

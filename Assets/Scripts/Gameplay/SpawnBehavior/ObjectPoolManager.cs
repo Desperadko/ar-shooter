@@ -26,11 +26,13 @@ namespace Game.Gameplay.SpawnBehavior
         private void OnEnable()
         {
             GameManager.OnGameOver += DespawnAll;
+            GameManager.OnMainMenuOpened += DespawnAll;
         }
 
         private void OnDisable()
         {
             GameManager.OnGameOver -= DespawnAll;
+            GameManager.OnMainMenuOpened -= DespawnAll;
         }
 
         public static GameObject Spawn(PoolEntry poolable, Vector3 position, Quaternion rotation)

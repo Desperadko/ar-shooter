@@ -113,13 +113,14 @@ namespace Game.UI
         {
             scanUI.SetActive(true);
             mainMenuUI.SetActive(false);
-            HandlePersistentUI();
             mainMenuPersistentButtonUI.SetActive(true);
 
             isPlaying = false;
 
             prevUI = scanUI;
             prevIsPlaying = isPlaying;
+
+            HandlePersistentUI();
 
             OnScan?.Invoke();
         }
@@ -128,7 +129,6 @@ namespace Game.UI
         {
             gameUI.SetActive(true);
             prevUI.SetActive(false);
-            HandlePersistentUI();
             mainMenuPersistentButtonUI.SetActive(false);
 
             isPlaying = true;
@@ -138,6 +138,8 @@ namespace Game.UI
             prevUI = gameUI;
             prevIsPlaying = isPlaying;
 
+            HandlePersistentUI();
+
             OnGameStarted?.Invoke();
         }
 
@@ -145,13 +147,14 @@ namespace Game.UI
         {
             pauseUI.SetActive(true);
             gameUI.SetActive(false);
-            HandlePersistentUI();
             mainMenuPersistentButtonUI.SetActive(false);
 
             isPlaying = false;
 
             prevUI = pauseUI;
             prevIsPlaying = isPlaying;
+
+            HandlePersistentUI();
 
             OnGamePaused?.Invoke();
         }
@@ -160,13 +163,14 @@ namespace Game.UI
         {
             gameUI.SetActive(true);
             pauseUI.SetActive(false);
-            HandlePersistentUI();
             mainMenuPersistentButtonUI.SetActive(false);
 
             isPlaying = true;
 
             prevUI = gameUI;
             prevIsPlaying = isPlaying;
+
+            HandlePersistentUI();
 
             OnGameResumed?.Invoke();
         }
@@ -175,13 +179,14 @@ namespace Game.UI
         {
             scanUI.SetActive(true);
             defeatUI.SetActive(false);
-            HandlePersistentUI();
             mainMenuPersistentButtonUI.SetActive(true);
 
             isPlaying = false;
 
             prevUI = scanUI;
             prevIsPlaying = isPlaying;
+
+            HandlePersistentUI();
 
             OnScan?.Invoke();
         }
@@ -190,17 +195,17 @@ namespace Game.UI
         {
             mainMenuRedirectionConfirmationUI.SetActive(true);
             prevUI.SetActive(false);
-            HandlePersistentUI();
             mainMenuPersistentButtonUI.SetActive(false);
 
             isPlaying = false;
+
+            HandlePersistentUI();
         }
 
         private void PositiveConfirmation()
         {
             mainMenuUI.SetActive(true);
             mainMenuRedirectionConfirmationUI.SetActive(false);
-            HandlePersistentUI();
             mainMenuPersistentButtonUI.SetActive(false);
 
             isPlaying = false;
@@ -208,16 +213,19 @@ namespace Game.UI
             prevUI = mainMenuUI;
             prevIsPlaying = isPlaying;
 
+            HandlePersistentUI();
+
             OnMainMenuOpened?.Invoke();
         }
 
         private void NegativeConfirmation()
         {
             prevUI.SetActive(true);
-            HandlePersistentUI();
             mainMenuRedirectionConfirmationUI.SetActive(false);
 
             isPlaying = prevIsPlaying;
+
+            HandlePersistentUI();
 
             if(isPlaying)
             {
@@ -243,7 +251,7 @@ namespace Game.UI
 
         private void HandlePersistentUI()
         {
-
+            mainMenuPersistentButtonUI.SetActive(scanUI.activeSelf);
         }
     }
 }
