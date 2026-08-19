@@ -9,31 +9,18 @@ namespace Assets.Scripts.Microtransactions
 {
     public class CurrencyManager : MonoBehaviour
     {
-        private CurrencyManager Instance;
-
         public event Action<int> OnCurrencyChanged;
         public int Gems => PlayerStateManager.Instance.CurrentState.currency;
 
         [SerializeField] private TMP_Text gemsText;
         private const string GEMS_TEXT_PREFIX = " Gems";
 
-        private void Awake()
-        {
-            if(Instance != null && Instance != this)
-            {
-                Destroy(gameObject);
-                return;
-            }
-
-            Instance = this;
-        }
-
         private void Start()
         {
             RefreshText();
         }
 
-        public bool CanAfford(int amount)
+        public bool CanAfford(float amount)
         {
             return amount >= 0 && amount <= Gems;
         }

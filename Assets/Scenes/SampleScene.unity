@@ -2070,6 +2070,52 @@ Transform:
   - {fileID: 393480025}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &380828984
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 380828986}
+  - component: {fileID: 380828985}
+  m_Layer: 0
+  m_Name: ShopManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &380828985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 380828984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d18b3a4e135a6048940f7c557714e7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ShopManager
+  inventoryManager: {fileID: 2099236484}
+  currencyManager: {fileID: 2099236481}
+--- !u!4 &380828986
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 380828984}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.93928, y: 1.5377, z: 33.81948}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &393480024
 GameObject:
   m_ObjectHideFlags: 0
@@ -9221,6 +9267,7 @@ GameObject:
   - component: {fileID: 2099236483}
   - component: {fileID: 2099236482}
   - component: {fileID: 2099236481}
+  - component: {fileID: 2099236484}
   m_Layer: 0
   m_Name: PersistenceManager
   m_TagString: Untagged
@@ -9240,6 +9287,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4dd30bb0ae01e24e8a0cf23ce0bfe5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Microtransactions.CurrencyManager
+  Instance: {fileID: 0}
   gemsText: {fileID: 577564271}
 --- !u!114 &2099236482
 MonoBehaviour:
@@ -9255,6 +9303,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Game.Persistence.PlayerStateManager
   CurrentState:
     currency: 100
+    ownedItems: []
 --- !u!4 &2099236483
 Transform:
   m_ObjectHideFlags: 0
@@ -9270,6 +9319,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2099236484
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2099236480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcd3c86d0b8f4fc4bb729ad3688246b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Game.Shop.InventoryManager
 --- !u!1 &2115810743
 GameObject:
   m_ObjectHideFlags: 0
@@ -9340,3 +9401,4 @@ SceneRoots:
   - {fileID: 63636480}
   - {fileID: 1051522728}
   - {fileID: 2115810744}
+  - {fileID: 380828986}
