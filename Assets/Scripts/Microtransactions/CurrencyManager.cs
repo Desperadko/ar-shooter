@@ -12,7 +12,7 @@ namespace Assets.Scripts.Microtransactions
         public event Action<int> OnCurrencyChanged;
         public int Gems => PlayerStateManager.Instance.CurrentState.currency;
 
-        [SerializeField] private TMP_Text gemsText;
+        [SerializeField] private TMP_Text[] gemsTexts;
         private const string GEMS_TEXT_PREFIX = " Gems";
 
         private void Start()
@@ -45,8 +45,10 @@ namespace Assets.Scripts.Microtransactions
 
         private void RefreshText()
         {
-            if (gemsText != null)
-                gemsText.text = Gems.ToString() + GEMS_TEXT_PREFIX;
+            foreach(var textTMP in gemsTexts)
+            {
+                textTMP.text = Gems.ToString() + GEMS_TEXT_PREFIX;
+            }
         }
 
         private void SaveAndNotify()

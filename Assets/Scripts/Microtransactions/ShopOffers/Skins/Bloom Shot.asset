@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b7863bd8679cb14fb2a9537cf4d2352, type: 3}
+  m_Name: Bloom Shot
+  m_EditorClassIdentifier: Assembly-CSharp::Game.Shop.SkinDefinition
+  id: bloom_shot_skin
+  displayName: Bloom Shot
+  description: 
+  icon: {fileID: 21300000, guid: 570cb8a2d584511468b5a9e8109ed5d0, type: 3}
+  prices: 00000000
+  category: 1
+  projectileMaterial: {fileID: 0}
+  trailMaterial: {fileID: 0}
+  elementalType: 3

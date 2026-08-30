@@ -18,4 +18,5 @@ MonoBehaviour:
   simulatedPrice: 24.99
   baseAmount: 1500
   bonusAmount: 150
+  bonusPercentage: 10
   bestPrice: 1

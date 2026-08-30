@@ -17,5 +17,6 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 8d004882cd94d8f499f4382e646a8c5b, type: 3}
   simulatedPrice: 9.99
   baseAmount: 600
-  bonusAmount: 50
+  bonusAmount: 30
+  bonusPercentage: 5
   bestPrice: 0

@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 3089218613744204436}
   - component: {fileID: 1915447298578453072}
   - component: {fileID: 5448128896943988249}
+  - component: {fileID: 1646824109546793447}
   m_Layer: 0
   m_Name: Fire Projectile
   m_TagString: Untagged
@@ -339,3 +340,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Gameplay.Systems.Elemental
   Type: 2
+--- !u!114 &1646824109546793447
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7006049654830387825}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8daa96c1fdbcc81488295c218c12e384, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectileSkinApplier
+  elemental: {fileID: 5448128896943988249}
+  projectileMaterial: {fileID: 7064870913413270166}
+  projectileTrailMaterial: {fileID: 426091924252662281}
+  availableSkins: {fileID: 11400000, guid: c43dd91ac5ff4d9418d5696a85cce0eb, type: 2}

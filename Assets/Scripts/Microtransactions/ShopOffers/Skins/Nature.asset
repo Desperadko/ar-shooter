@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b7863bd8679cb14fb2a9537cf4d2352, type: 3}
+  m_Name: Nature
+  m_EditorClassIdentifier: Assembly-CSharp::Game.Shop.SkinDefinition
+  id: nature_skin
+  displayName: Nature
+  description: Default nature projectile skin
+  icon: {fileID: 21300000, guid: ece5534ecc4c42347a65fbf8a803a77f, type: 3}
+  prices: 00000000
+  category: 1
+  projectileMaterial: {fileID: 2100000, guid: 3560b807a1043464b83762b279345f76, type: 2}
+  trailMaterial: {fileID: 2100000, guid: 2b63473ef03bdd04fa81e3d44803d72c, type: 2}
+  elementalType: 3

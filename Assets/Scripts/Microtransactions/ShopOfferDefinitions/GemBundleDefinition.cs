@@ -11,6 +11,7 @@ namespace Game.Shop
         public float simulatedPrice;
         public int baseAmount;
         public int bonusAmount;
+        public int bonusPercentage;
         public int TotalAmount { get => baseAmount + bonusAmount; }
         public bool bestPrice;
     }
