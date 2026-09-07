@@ -1,7 +1,4 @@
 ﻿using Game.Shop;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,11 +17,13 @@ namespace Game.UI.Shop
 
         private GemBundleDefinition bundle;
         private ShopManager shopManager;
+        private PurchaseConfirmationPopup popup;
 
-        public void Bind(GemBundleDefinition bundle, ShopManager shopManager)
+        public void Bind(GemBundleDefinition bundle, ShopManager shopManager, PurchaseConfirmationPopup popup)
         {
             this.bundle = bundle;
             this.shopManager = shopManager;
+            this.popup = popup;
 
             totalAmountText.text = bundle.bonusAmount > 0
                 ? bundle.baseAmount.ToString() + " + " + bundle.bonusAmount.ToString()
@@ -50,7 +49,14 @@ namespace Game.UI.Shop
                 icon.sprite = bundle.icon;
 
             buyButton.onClick.RemoveAllListeners();
-            buyButton.onClick.AddListener(Buy);
+            buyButton.onClick.AddListener(() => StartCoroutine(ShopCardFeedback.PressedAnimation(transform)));
+            buyButton.onClick.AddListener(ShowPopup);
+        }
+
+        private void ShowPopup()
+        {
+            var price = bundle.simulatedPrice.ToString("0.00") + "€";
+            popup.Show($"Are you sure you want to purchase {bundle.displayName} for {price}?", Buy);
         }
 
         private void Buy()

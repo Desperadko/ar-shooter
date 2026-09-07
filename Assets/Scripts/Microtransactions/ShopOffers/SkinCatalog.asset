@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Game.Shop.SkinCatalog
   skins:
   - {fileID: 11400000, guid: 283108b841a0168498b743486c13c340, type: 2}
-  - {fileID: 11400000, guid: b13f26e744b800d4197fab01d591b5d3, type: 2}
+  - {fileID: 11400000, guid: 2cd0936a21c54af49b35989e1b7470a7, type: 2}
   - {fileID: 11400000, guid: a73c4e14d80443145b5be1601d983079, type: 2}
   - {fileID: 11400000, guid: f9673133b4ffc4c4697fdface36d17e2, type: 2}
   - {fileID: 11400000, guid: b13f26e744b800d4197fab01d591b5d3, type: 2}

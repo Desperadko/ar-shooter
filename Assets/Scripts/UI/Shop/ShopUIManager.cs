@@ -8,6 +8,8 @@ namespace Game.UI.Shop
 {
     public class ShopUIManager : MonoBehaviour
     {
+        private readonly List<SkinDefinitionCard> skinCards = new List<SkinDefinitionCard>();
+
         [SerializeField] private ShopManager shopManager;
         [SerializeField] private InventoryManager inventoryManager;
 
@@ -35,16 +37,28 @@ namespace Game.UI.Shop
             foreach (var bundle in gemBundles)
             {
                 var card = Instantiate(gemBundleCardPrefab, gemBundleContentParent);
-                card.Bind(bundle, shopManager);
+                card.Bind(bundle, shopManager, popup);
             }
         }
 
         private void CreateSkinCards()
         {
+            skinCards.Clear();
+
             foreach(var skin in catalog.Skins)
             {
                 var card = Instantiate(SkinCardPrefab, skinsContentParent);
-                card.Bind(skin, shopManager, inventoryManager, popup);
+                card.Bind(skin, shopManager, inventoryManager, popup, RefreshSkinCards);
+                skinCards.Add(card);
+            }
+        }
+
+        private void RefreshSkinCards()
+        {
+            foreach (var card in skinCards)
+            {
+                if (card != null)
+                    card.RefreshCardFunctionality();
             }
         }
     }

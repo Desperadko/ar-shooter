@@ -1,4 +1,5 @@
 using Game.Shop;
+using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -11,34 +12,43 @@ namespace Game.UI.Shop
         [SerializeField] private TMP_Text skinStatusText;
         [SerializeField] private Image icon;
         [SerializeField] Button buyButton;
-        [SerializeField] TMP_Text notEnoughText;
 
         private SkinDefinition skinDefinition;
         private ShopManager shopManager;
         private InventoryManager inventoryManager;
         private PurchaseConfirmationPopup popup;
+        private Action onSkinChanged;
 
-        public void Bind(SkinDefinition skinDefinition, ShopManager shopManager, InventoryManager inventoryManager, PurchaseConfirmationPopup popup)
+        private const string OWNED = "Owned";
+        private const string EQUIPPED = "Equipped";
+
+        public void Bind(
+            SkinDefinition skinDefinition,
+            ShopManager shopManager,
+            InventoryManager inventoryManager,
+            PurchaseConfirmationPopup popup,
+            Action onSkinChanged)
         {
             this.skinDefinition = skinDefinition;
             this.shopManager = shopManager;
             this.inventoryManager = inventoryManager;
             this.popup = popup;
+            this.onSkinChanged = onSkinChanged;
 
             icon.sprite = skinDefinition.icon;
-
-            buyButton.onClick.RemoveAllListeners();
-            buyButton.onClick.AddListener(() => StartCoroutine(nameof(PressedAnimation)));
             RefreshCardFunctionality();
         }
 
-        private void RefreshCardFunctionality()
+        public void RefreshCardFunctionality()
         {
+            buyButton.onClick.RemoveAllListeners();
+            buyButton.onClick.AddListener(() => StartCoroutine(PressedAnimation()));
+
             var equipped = inventoryManager.GetEquippedItemId(skinDefinition.elementalType) == skinDefinition.id;
 
             if (equipped)
             {
-                skinStatusText.text = "Equipped";
+                skinStatusText.text = EQUIPPED;
                 buyButton.interactable = false;
                 return;
             }
@@ -49,7 +59,7 @@ namespace Game.UI.Shop
 
             if (owned)
             {
-                skinStatusText.text = "Owned";
+                skinStatusText.text = OWNED;
                 buyButton.onClick.AddListener(EquipSkin);
             }
             else
@@ -65,6 +75,7 @@ namespace Game.UI.Shop
         private void EquipSkin()
         {
             inventoryManager.EquipItem(skinDefinition.id, skinDefinition.elementalType);
+            onSkinChanged?.Invoke();
         }
 
         private void ShowPopup()
@@ -80,7 +91,7 @@ namespace Game.UI.Shop
             popup.Show($"Are you sure you want to purchase {skinDefinition.displayName} for {price}?", PurchaseSkin);
         }
 
-        public void PurchaseSkin()
+        private void PurchaseSkin()
         {
             var success = shopManager.TryPurchase(skinDefinition);
 
@@ -91,14 +102,11 @@ namespace Game.UI.Shop
             }
 
             inventoryManager.EquipItem(skinDefinition.id, skinDefinition.elementalType);
-            buyButton.onClick.RemoveAllListeners();
-            buyButton.onClick.AddListener(() => StartCoroutine(PressedAnimation()));
-            RefreshCardFunctionality();
+            onSkinChanged?.Invoke();
         }
 
         private IEnumerator NotEnoughFundsAnimation()
         {
-            notEnoughText.gameObject.SetActive(true);
             skinStatusText.color = Color.red;
 
             Vector3 start = transform.localPosition;
@@ -113,18 +121,11 @@ namespace Game.UI.Shop
             yield return new WaitForSeconds(1f);
 
             skinStatusText.color = Color.white;
-            notEnoughText.gameObject.SetActive(false);
         }
 
         private IEnumerator PressedAnimation()
         {
-            Vector3 original = transform.localScale;
-            Vector3 pressed = original * 0.94f;
-
-            transform.localScale = pressed;
-            yield return new WaitForSeconds(0.07f);
-
-            transform.localScale = original;
+            yield return ShopCardFeedback.PressedAnimation(transform);
         }
     }
 }

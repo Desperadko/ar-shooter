@@ -16,8 +16,8 @@ MonoBehaviour:
   displayName: Bloom Shot
   description: 
   icon: {fileID: 21300000, guid: 570cb8a2d584511468b5a9e8109ed5d0, type: 3}
-  prices: 00000000
+  prices: 6e000000
   category: 1
-  projectileMaterial: {fileID: 0}
-  trailMaterial: {fileID: 0}
+  projectileMaterial: {fileID: 2100000, guid: 5e9ac8476754c2f4c9e3b9786ff920fd, type: 2}
+  trailMaterial: {fileID: 2100000, guid: dd69725bf717aa8498afdcc83ea3ea09, type: 2}
   elementalType: 3
